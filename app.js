@@ -10,7 +10,7 @@ require("./helpers");
 
 // The Server ----------------------------------- //
 
-var app = express.createServer().listen(8080);
+var app = express.createServer().listen(process.env.PORT || 8080);
 
 app.set("view engine", "ejs");
 
