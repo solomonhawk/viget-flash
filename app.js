@@ -14,13 +14,16 @@ var app = express.createServer().listen(process.env.PORT || 8080);
 
 app.set("view engine", "ejs");
 
-app.get("/", function(req, res) {
-	res.render("index", { contacts: contacts});
-}); 
-
 app.configure(function(){
     app.use(express.static(__dirname + '/public'));
 });
+
+
+// Routes ---------------------------------------- //
+
+app.get("/", function(req, res) {
+	res.render("index", { contacts: contacts});
+}); 
 
 
 // The Harvester -------------------------------- //

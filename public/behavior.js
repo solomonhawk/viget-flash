@@ -1,33 +1,46 @@
 (function() {
 
-	var body = document.body,
-		time = 10000,
-		$    = function(el, scope) { return (scope || document).querySelector(el); },
-		$$   = function(el, scope) { return (scope || document).querySelectorAll(el); };
+	  var body = document.body,
+       time = 10000;
+    
+    function $ (el, scope) { 
+        return (scope || document).querySelector(el); 
+    }
 
-	function sample (arr) {
-		return arr[~~(Math.random() * arr.length)];
-	}
+		function $$ (el, scope) { 
+        return (scope || document).querySelectorAll(el); 
+    };
 
-	function mixUp () {
+	  function sample (arr) {
+		    return arr[~~(Math.random() * arr.length)];
+	  }
 
-		if (mixUp.target) mixUp.target.className = "";
-		if (mixUp.altName) mixUp.altName.className = "alt";
+	  function mixUp () {
 
-		var target  = mixUp.target = sample($$("figure")),
-			altName = mixUp.altName = $(".alt", target);
+		    if (mixUp.target) {
+            mixUp.target.className = "";
+        }
 
-		target.className += " selected";
+		    if (mixUp.altName) {
+            mixUp.altName.className = "alt";
+        }
 
-		if (body.offsetWidth / target.offsetLeft <= 2) target.className += " right";
+		    var target  = mixUp.target = sample($$("figure")),
+          altName = mixUp.altName = $(".alt", target);
 
-		setTimeout(function() {
-			altName.className = "alt hover";
-		}, time * 0.5);
+		    target.className += " selected";
 
-	}
+		    if (body.offsetWidth / target.offsetLeft <= 2) {
+            target.className += " right";
+        }
 
-	setInterval(mixUp, time);
-	mixUp();
+		    setTimeout(function() {
+			      altName.className = "alt hover";
+		    }, time * 0.5);
+
+	  }
+
+	  setInterval(mixUp, time);
+	  mixUp();
 
 }());
