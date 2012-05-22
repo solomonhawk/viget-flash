@@ -12,7 +12,7 @@
 	function mixUp () {
 
 		if (mixUp.target) mixUp.target.className = "";
-		if (mixUp.altName) mixUp.target.className = "alt";
+		if (mixUp.altName) mixUp.altName.className = "alt";
 
 		var target  = mixUp.target = sample($$("figure")),
 			altName = mixUp.altName = $(".alt", target);
