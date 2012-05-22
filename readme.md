@@ -1,3 +1,3 @@
 # viget-flash
 
-A flash card gam for Viget employees!
+A flash card game for Viget employees!
