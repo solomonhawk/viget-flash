@@ -1,0 +1,21 @@
+{
+  "author": "Nate Hunzaker <nate.hunzaker@viget.com> (http://natehunzaker.com)",
+  "name": "flashbang",
+  "description": "A flashcard game for learning Viget Employees",
+  "version": "0.0.0",
+  "dependencies": {
+    "jQuery" : "*",
+    "socket.io" : "*",
+    "request" : "*",
+    "colors" : "*",
+    "ejs" : "*"
+  },
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  },
+  "scripts": {
+    "start": "node app"
+  }
+}

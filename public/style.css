@@ -1,0 +1,124 @@
+@import url("https://raw.github.com/necolas/normalize.css/master/normalize.css");
+@import url(http://fonts.googleapis.com/css?family=Shadows+Into+Light+Two);
+
+body {
+	background: #082b3b;
+	font-family: sans-serif;
+	margin: 0 auto;
+	max-width: 1550px;
+}
+
+h2 {
+	font-family: "Shadows Into Light Two";
+}
+
+h2.alt {
+	font-size: 1.25em;
+	position: absolute;
+	top: 0.5em;
+	left: 0;
+	width: 100%;
+	background: white;
+
+	-webkit-transition: 0.3s opacity linear;
+}
+
+h2.alt:hover, h2.alt.hover {
+	opacity: 0;
+}
+
+small {
+	font-size: 0.6em;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+
+figure {
+	opacity: 0.5;
+	padding: 0;
+	position: relative;
+	margin: 0;
+	width: 130px;
+	height: 130px;
+
+	-webkit-transition: 0.3s opacity linear;
+}
+
+figure img {
+	max-width: 100%;
+}
+
+figure.selected {
+	box-shadow: inset 0 0 0 2px #000, 0 1px 3px rgba(0,0,0,0.25);
+	opacity: 1;
+}
+
+ul {
+	list-style: none;
+	padding: 0;
+	text-align: center;
+}
+
+li {
+	display: inline-block;
+}
+
+.tooltip {
+	background: #fff;
+	border: 2px solid #082B3B;
+	border-width: 30px 5px 10px;
+	border-radius: 8px;
+	box-shadow: 0 0 2px rgba(0,0,0,0.55);
+	color: #082B3B;
+	font-size: 0.87em;
+	font-weight: normal;
+	margin: -80px 0 0;
+	opacity: 0;
+	padding-bottom: 1.5em;
+	position: absolute;
+	top: 50%;
+	right: -190px;
+	width: 200px;
+	z-index: 2;
+
+	-webkit-transition: 0.3s all linear;
+
+}
+
+.tooltip:after {
+	border: 10px solid #000;
+	border-color: transparent #082B3B transparent transparent;
+	content: "";
+	margin-top: -20px;
+	position: absolute;
+	top: 50%;
+	left: -25px;
+}
+
+.right .tooltip {
+	right: auto;
+	left: -210px;
+}
+
+.right .tooltip:after {
+	border-color: transparent transparent transparent #082B3B;
+	left: auto;
+	right: -25px;
+}
+
+.selected .tooltip {
+	opacity: 1;
+	right: -210px;
+}
+
+.tooltip sup {
+	position: absolute;
+	top: -20px;
+	left: 0;
+	color: 
+	white;
+	font: bold 0.875em/1em sans-serif;
+	text-transform: uppercase;
+	width: 100%;
+	text-align: center;
+}

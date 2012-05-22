@@ -1,0 +1,17 @@
+<ul>
+	<% contacts.shuffle().forEach(function(c, i) { %>
+		<li>
+
+			<figure>
+				<img src="<%= c.photo %>" alt="<%= c.name%>" />
+				<figcaption class="tooltip">
+					<sup>Hello, my name is:</sup>
+					<h2><%= c.name %></h2>
+					<h2 class="alt"><%= c.name.replace(/\S/g, "*") %></h2>
+					<small><b>I like:</b> <%= c.likes.join(", ") %></small>
+				</figcaption>
+			</figure>
+			
+		</li>
+	<% }) %>
+</ul>
