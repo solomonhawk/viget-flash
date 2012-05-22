@@ -11,16 +11,18 @@
 
 	function mixUp () {
 
-		if (mixUp.previous) mixUp.previous.className = "";
+		if (mixUp.target) mixUp.target.className = "";
+		if (mixUp.altName) mixUp.target.className = "alt";
 
-		var target = mixUp.previous = sample($$("figure"));
+		var target  = mixUp.target = sample($$("figure")),
+			altName = mixUp.altName = $(".alt", target);
 
 		target.className += " selected";
 
 		if (body.offsetWidth / target.offsetLeft <= 2) target.className += " right";
 
 		setTimeout(function() {
-			$$(".alt", target)[0].className += " hover";
+			altName.className = "alt hover";
 		}, time * 0.5);
 
 	}
