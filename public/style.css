@@ -135,7 +135,7 @@ figure.incorrect .tooltip {
 .tooltip:after {
 	border: 10px solid #000;
 	border-color: transparent;
-  border-left-color: inherit;
+  border-right-color: inherit;
 	content: "";
 	margin-top: -20px;
 	position: absolute;
@@ -150,7 +150,7 @@ figure.incorrect .tooltip {
 
 .right .tooltip:after {
 	border-color: transparent;
-  border-right-color: inherit;
+  border-left-color: inherit;
 	left: auto;
 	right: -25px;
 }
