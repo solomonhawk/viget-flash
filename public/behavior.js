@@ -160,7 +160,7 @@
         
         $("figure").each(function() {
 
-            if ( $(this).attr(criteria) === value) {
+            if ( value === "*" || $(this).attr(criteria) === value) {
                 $(this).addClass("unanswered");
             }
 
