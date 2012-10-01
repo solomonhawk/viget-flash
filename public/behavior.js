@@ -1,13 +1,12 @@
-(function() {
-    
-    console.log("Cheating is for losers...");
-    
-	  var body = document.body,
-		    time = 3000,
-        rounds = 1;
+(function(window) {
 
-    var correct = 0;
-    var incorrect = 0;
+    var F = window.F = {
+        flashcards: $("figure"),
+        correct: 0,
+        incorrect: 0,
+        time: 3000,
+        rounds: 0
+    };
     
     // EJS Friendly Underscore Templates
     $._.templateSettings = {
@@ -15,62 +14,82 @@
         evaluate: /\<\@(.+?)\@\>/gim
     };
     
-	  function sample (arr) {
+    F.init = function() {
+
+        F.flashcards.each(function(card) {
+            
+            $(card).find("img").click(function() {
+                F.mixUp(card);
+            });
+            
+        });
+
+        $(".global-filter a").click(function(e) {
+            
+            e.preventDefault();
+
+            $(".global-filter a").removeClass("active");
+            $(this).addClass("active");
+            
+            F.filterByAttribute( $("figure"), "data-team", $(this).attr("data-filter") );
+            
+        });
+
+        F.shuffleEmUp(F.mixUp);
+    };
+
+	  F.sample = function (arr) {
 	      return arr[~~(Math.random() * arr.length)];
-	  }
+	  };
 
-    var flashcards = $("figure");
-    var stopwatch = (function() {
+    F.stopwatch = {
         
-        var timeout = null,
-            countdown = time;
-        
-        var me = {};
-        
-        me.start = function(action) {
-            timeout && me.stop();
-            rounds += 1;
-            $("#rounds").html("Rounds: " + rounds);
-            var timeout = setTimeout(action, countdown);
-        };
-        
-        me.stop = function() {
-            timeout && clearTimeout(timeout);
-        };
+        timeout: null,
 
-        return me;
+        start: function(action, time) {
+            F.stopwatch.stop();
+            F.stopwatch.rounds += 1;
+            F.stopwatch.timeout = setTimeout(action, time || F.time);
+        },
 
-    }());
+        stop: function() {
+            clearTimeout(F.stopwatch.timeout);
+            F.stopwatch.timeout = null;
+        }        
 
-    function generateMultipleChoice(correct, pool) {
+    };
+
+    F.generateMultipleChoice = function (correct, pool, size) {
         
-        var clone = Array.apply(null, pool),
-            index = $.indexOf(pool, correct);
+        var clone = Array.apply(null, pool);
+        var index = $.indexOf(pool, correct);
+        
+        size = size || 4;
 
         clone = clone.slice(0, index).concat( clone.slice(index + 1, -1) );
         
-        var incorrect = $.shuffle(clone).slice(0, 3);
+        var incorrect = $.shuffle(clone).slice(0, size - 1);
         
         return $.shuffle( [correct].concat(incorrect) );
 
-    }
+    };
     
-    function globalStop() {
+    F.globalStop = function() {
         
-        stopwatch.stop();
-        $.each(shuffleEmUp.timeouts || [], function(e) {
+        F.stopwatch.stop();
+        $.each(F.shuffleEmUp.timeouts || [], function(e) {
             clearTimeout(e);
         });
 
         $("figure").removeClass("highlight");
-    }
+    };
     
-    function shuffleEmUp(then) {
+    F.shuffleEmUp = function() {
         
-        shuffleEmUp.timeouts = [];
+        F.shuffleEmUp.timeouts = [];
         
         if ( $("figure.unanswered").length === 0) {
-            reset();
+            F.reset();
         }
 
         var cards = $.shuffle( $("figure.unanswered") ),
@@ -81,7 +100,7 @@
         
         $.each(cards, function(card, i) {
 
-            shuffleEmUp.timeouts[i] = setTimeout(function(next, previous) {
+            F.shuffleEmUp.timeouts[i] = setTimeout(function(next, previous) {
                 
                 $(next).addClass("highlight");
                 $(previous).removeClass("highlight");
@@ -90,23 +109,23 @@
                 
                 if (done.length === cards.length) {
                     $("figure").removeClass("highlight");
-                    mixUp();
+                    F.mixUp();
                 }
 
             }, (Math.random() * 2500), card, cards[i-1]);
 
         });
 
-    }
+    };
 
-    function reset() {
+    F.reset = function() {
         $("figure").addClass("unanswered");
         $(".global-filter a").removeClass("active").first().addClass("active");
-    }
+    };
     
-    function addAnswers(card) {
+    F.addAnswers = function(card, pool) {
         
-        var possible = generateMultipleChoice(card, flashcards),
+        var possible = F.generateMultipleChoice(card, pool),
             $card = $(card),
             answer = $card.attr("data-name"),
             $answers = $card.find(".multiple-choice");
@@ -116,8 +135,14 @@
         $card.removeClass("correct incorrect");
 
         var newAnswers = $.template( $("#tmpl-multiple-choice").html(), {
-            answers: possible.map(function(el) { 
+            answers: possible.map(function(el) {
+
+                if (!el.getAttribute) {
+                    return null;
+                }
+
                 return el.getAttribute("data-name");
+                
             })
         });
         
@@ -128,88 +153,76 @@
             var guess = $answers.find("[type='radio']:checked").val();
 
             if ( guess === answer ) {
-                correct += 1;
+                F.correct += 1;
                 $card.addClass("correct").removeClass("unanswered");
-                $(".js-correct").text(correct);
+                $(".js-correct").text(F.correct);
             }  else {
-                incorrect += 1;
+                F.incorrect += 1;
                 $card.addClass("incorrect");
-                $(".js-incorrect").text(incorrect);
+                $(".js-incorrect").text(F.incorrect);
             }
             
-            showName($card);
-            stopwatch.start(shuffleEmUp);
+            F.showName($card);
+            F.stopwatch.start(F.shuffleEmUp);
 
         });
-    }
 
-    function showName ($target) {
-        $target.addClass("reveal");
-    }
+    };
 
-    function prepare ($target) {
+    F.showName = function ($target, css) {
+        $target.addClass(css ||"reveal");
+    };
+
+    F.prepare = function ($target) {
 
         $target.removeClass("right reveal correct incorrect").addClass("selected");
 
-        if (body.offsetWidth / $target.offset().left <= 2) {
+        if (window.document && document.body.offsetWidth / $target.offset().left <= 2) {
 		        $target.addClass("right");
 		    }
 
-    }
+    };
     
-	  function mixUp (override) {
+	  F.mixUp = function(override) {
         
-        globalStop();
+        F.globalStop();
 
         $(".selected").removeClass("selected");
         $(".alt").removeClass("hover");
         
-        flashcards = $("figure.unanswered");
+        F.flashcards = $("figure.unanswered");
         
-        var plucked  = override || sample(flashcards),
+        var plucked  = override || F.sample(F.flashcards),
 	          $target  = $(plucked);
 
-        addAnswers(plucked);
-        prepare($target);
-	  }
+        F.addAnswers(plucked, F.flashcards);
+        F.prepare($target);
 
-    function filter (criteria, value) {
-        
-        globalStop();
-        
-        console.log("Filtering %s by: %s", criteria, value);
-        
-        $("figure").removeClass("unanswered");
-        
-        $("figure").each(function() {
+        F.rounds += 1;
+        $("#rounds").text(F.rounds);
+	  };
 
+    F.filterByAttribute = function($container, criteria, value) {
+        
+        F.globalStop();
+
+        var bucket = [];
+
+        $container.removeClass("unanswered").each(function() {
+            
             if ( value === "*" || $(this).attr(criteria) === value) {
                 $(this).addClass("unanswered");
+                bucket.push(this);
             }
-
+            
         });
         
-        shuffleEmUp();
+        F.shuffleEmUp();
+
+        return bucket;
         
-    }
+    };
+    
+    F.init();
 
-    flashcards.each(function(card) {
-        $(card).find("img").click(function() {
-            mixUp(card);
-        });
-    });
-
-    $(".global-filter a").click(function(e) {
-
-        e.preventDefault();
-
-        $(".global-filter a").removeClass("active");
-        $(this).addClass("active");
-        
-        filter( "data-team", $(this).attr("data-filter") );
-
-    });
-	  
-    shuffleEmUp(mixUp);
-
-}());
+}(window));

@@ -1,0 +1,193 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Mocha Tests</title>
+
+    <link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
+
+    <script src="../node_modules/mocha/mocha.js"></script>
+    <script src="../node_modules/chai/chai.js"></script>
+    <script src="../node_modules/grunt-mocha/tasks/mocha/mocha-helper.js" type="text/javascript" charset="utf-8"></script>
+    
+    <script>mocha.setup('bdd')</script>
+
+    <script src="../public/ender.js"></script>
+    <script src="../public/behavior.js"></script>
+    <script src="client-test.js"></script>
+
+  </head>
+
+  <body>
+
+    <div id="mocha"></div>
+    
+    <div style="display: none">
+
+      <ul class="global-filter">
+        <li>
+          <a href="#" class="active" data-filter="*">All</a>
+          <a href="#" data-filter="strategy-marketing">Strategy &amp; Marketing</a>
+          <a href="#" data-filter="ux-designers">UX Designers</a>
+          <a href="#" data-filter="designers">Designers</a>
+          <a href="#" data-filter="front-end-developers">Front-End-Developers</a>
+          <a href="#" data-filter="developers">Developers</a>
+          <a href="#" data-filter="project-managers">Project Managers</a>
+          <a href="#" data-filter="other">Other</a>
+        </li>
+      </ul>
+
+      <ul>
+        <li>
+
+			    <figure class="unanswered" data-name="Patrick Reagan" data-team="developers">
+
+				    <img src="http://viget.com/uploads/image/profile/person/preagan-thumb.jpg" alt="Patrick Reagan">
+
+				    <figcaption class="tooltip">
+
+					    <sup>Hello, my name is:</sup>
+              
+              <div class="name">
+					      <h2>
+                  Patrick Reagan
+                  <br>
+                  <small>Developers</small>
+                </h2>
+                
+                <div class="name alt">
+					        <h2>**************</h2>
+                </div>
+
+                <ul class="multiple-choice"></ul>
+
+                <hr>
+
+                <button>Submit</button>
+
+				      </div></figcaption>
+            
+			    </figure>
+			    
+		    </li>
+        <li>
+
+			    <figure class="unanswered" data-name="Patrick Reagan" data-team="developers">
+
+				    <img src="http://viget.com/uploads/image/profile/person/preagan-thumb.jpg" alt="Patrick Reagan">
+
+				    <figcaption class="tooltip">
+
+					    <sup>Hello, my name is:</sup>
+              
+              <div class="name">
+					      <h2>
+                  Patrick Reagan
+                  <br>
+                  <small>Developers</small>
+                </h2>
+                
+                <div class="name alt">
+					        <h2>**************</h2>
+                </div>
+
+                <ul class="multiple-choice"></ul>
+
+                <hr>
+
+                <button>Submit</button>
+
+				      </div></figcaption>
+            
+			    </figure>
+			    
+		    </li>
+        <li>
+
+			    <figure class="unanswered" data-name="Patrick Reagan" data-team="developers">
+
+				    <img src="http://viget.com/uploads/image/profile/person/preagan-thumb.jpg" alt="Patrick Reagan">
+
+				    <figcaption class="tooltip">
+
+					    <sup>Hello, my name is:</sup>
+              
+              <div class="name">
+					      <h2>
+                  Patrick Reagan
+                  <br>
+                  <small>Developers</small>
+                </h2>
+                
+                <div class="name alt">
+					        <h2>**************</h2>
+                </div>
+
+                <ul class="multiple-choice"></ul>
+
+                <hr>
+
+                <button>Submit</button>
+
+				      </div></figcaption>
+            
+			    </figure>
+			    
+		    </li>
+        <li>
+
+			    <figure class="unanswered" data-name="Patrick Reagan" data-team="developers">
+
+				    <img src="http://viget.com/uploads/image/profile/person/preagan-thumb.jpg" alt="Patrick Reagan">
+
+				    <figcaption class="tooltip">
+
+					    <sup>Hello, my name is:</sup>
+              
+              <div class="name">
+					      <h2>
+                  Patrick Reagan
+                  <br>
+                  <small>Developers</small>
+                </h2>
+                
+                <div class="name alt">
+					        <h2>**************</h2>
+                </div>
+
+                <ul class="multiple-choice"></ul>
+
+                <hr>
+
+                <button>Submit</button>
+
+				      </div></figcaption>
+            
+			    </figure>
+			    
+		    </li>
+      </ul>
+
+    </div>
+
+    <script type="template/underscore" id="tmpl-multiple-choice">
+      
+      <@ $.each(answers, function(answer) { @>
+        <li>
+          <label>
+            <input name="answer" type="radio" value="<@= answer @>" /> <@= answer @>
+          </label>
+        </li>
+        <@ }); @>
+          
+    </script>
+
+    <script>
+      chai.should();
+      var expect = chai.expect;
+      var assert = chai.assert;
+      mocha.run();
+    </script>
+
+  </body>
+
+</html>

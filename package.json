@@ -11,6 +11,8 @@
     "express" : "2.5.9"
   },
   "devDependencies": {
+    "grunt-mocha" : "*",
+    "grunt" : "*",
     "mocha" : "*",
     "chai"   : "*"
   },
