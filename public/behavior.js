@@ -3,7 +3,7 @@
     console.log("Cheating is for losers...");
     
 	  var body = document.body,
-		    time = 2000,
+		    time = 3000,
         rounds = 1;
 
     var correct = 0;
