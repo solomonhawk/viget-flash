@@ -55,8 +55,20 @@
 
     }
     
-    function shuffleEmUp(then) {
+    function globalStop() {
+        
+        stopwatch.stop();
+        $.each(shuffleEmUp.timeouts || [], function(e) {
+            clearTimeout(e);
+        });
 
+        $("figure").removeClass("highlight");
+    }
+    
+    function shuffleEmUp(then) {
+        
+        shuffleEmUp.timeouts = [];
+        
         if ( $("figure.unanswered").length === 0) {
             reset();
         }
@@ -69,7 +81,7 @@
         
         $.each(cards, function(card, i) {
 
-            setTimeout(function(next, previous) {
+            shuffleEmUp.timeouts[i] = setTimeout(function(next, previous) {
                 
                 $(next).addClass("highlight");
                 $(previous).removeClass("highlight");
@@ -147,7 +159,7 @@
     
 	  function mixUp (override) {
         
-        stopwatch.stop();
+        globalStop();
 
         $(".selected").removeClass("selected");
         $(".alt").removeClass("hover");

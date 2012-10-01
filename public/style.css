@@ -4,7 +4,7 @@
 body {
 	background: #082b3b;
 	font-family: 'Source Sans Pro', sans-serif;
-	margin: 10% auto 0;
+	margin: 70px auto 0;
 	max-width: 1550px;
 }
 
@@ -24,7 +24,7 @@ h2 {
 	font-family: "Shadows Into Light Two";
 }
 
-.name small {
+.name small, .name > h2 {
   opacity: 0;
   -webkit-transition: 0.3s opacity linear;
   -moz-transition: 0.3s opacity linear;
@@ -32,12 +32,13 @@ h2 {
 }
 
 .name.alt h2 {
+	background: white;
 	font-size: 1.25em;
+  opacity: 1;
 	position: absolute;
 	top: 0.5em;
 	left: 0;
 	width: 100%;
-	background: white;
 
 	-webkit-transition: 0.3s opacity linear;
   -moz-transition: 0.3s opacity linear;
@@ -46,6 +47,10 @@ h2 {
 
 .reveal .name.alt {
 	opacity: 0;
+}
+
+.reveal .name > h2 {
+  opacity: 1;
 }
 
 .reveal small {
