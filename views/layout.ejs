@@ -1,19 +1,45 @@
 <!DOCTYPE html>
 <html>
 
-    <head>
+  <head>
 
-        <meta charset="utf-8">
+    <meta charset="utf-8">
 
-        <title>Viget Flash Cards</title>
+    <title>Viget Flash Cards</title>
 
-	      <link rel="stylesheet" href="/style.css" />
-	      <script src="/behavior.js" defer></script>
+	  <link rel="stylesheet" href="/style.css" />
 
-    </head>
+	  <script src="/ender.js" defer></script>
+	  <script src="/behavior.js" defer></script>
 
-    <body>
-	      <%- body %>
-    </body>
+  </head>
+
+  <body>
+
+    <nav>
+      Correct: <span class="js-correct">0</span>
+      Incorrect: <span class="js-incorrect">0</span>
+
+      <span id="rounds" class="pull-right">
+        Rounds: 1
+      </span>
+
+    </nav>
+    
+    <ul class="global-filter">
+      <li>
+        <a href="#" data-filter="strategy-marketing">Strategy &amp; Marketing</a>
+        <a href="#" data-filter="ux-designers">UX Designers</a>
+        <a href="#" data-filter="designers">Designers</a>
+        <a href="#" data-filter="front-end-developers">Front-End-Developers</a>
+        <a href="#" data-filter="developers">Developers</a>
+        <a href="#" data-filter="project-managers">Project Managers</a>
+        <a href="#" data-filter="other">Other</a>
+      </li>
+    </ul>
+
+	  <%- body %>
+
+  </body>
 
 </html>

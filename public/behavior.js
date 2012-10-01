@@ -1,46 +1,192 @@
 (function() {
+    
+    console.log("Cheating is for losers...");
+    
+	  var body = document.body,
+		    time = 2000,
+        rounds = 1;
 
-	var body = document.body,
-		time = 10000;
+    var correct = 0;
+    var incorrect = 0;
+    
+    // EJS Friendly Underscore Templates
+    $._.templateSettings = {
+        interpolate: /\<\@\=(.+?)\@\>/gim,
+        evaluate: /\<\@(.+?)\@\>/gim
+    };
+    
+	  function sample (arr) {
+	      return arr[~~(Math.random() * arr.length)];
+	  }
 
-	function $ (el, scope) { 
-		return (scope || document).querySelector(el); 
-	}
+    var flashcards = $("figure");
+    var stopwatch = (function() {
+        
+        var timeout = null,
+            countdown = time;
+        
+        var me = {};
+        
+        me.start = function(action) {
+            timeout && me.stop();
+            rounds += 1;
+            $("#rounds").html("Rounds: " + rounds);
+            var timeout = setTimeout(action, countdown);
+        };
+        
+        me.stop = function() {
+            timeout && clearTimeout(timeout);
+        };
 
-	function $$ (el, scope) { 
-		return (scope || document).querySelectorAll(el); 
-	}
+        return me;
 
-	function sample (arr) {
-	    return arr[~~(Math.random() * arr.length)];
-	}
+    }());
 
-	function mixUp () {
+    function generateMultipleChoice(correct, pool) {
+        
+        var clone = Array.apply(null, pool),
+            index = $.indexOf(pool, correct);
 
-	    if (mixUp.target) {
-	    	mixUp.target.className = "";
-		}
+        clone = clone.slice(0, index).concat( clone.slice(index + 1, -1) );
+        
+        var incorrect = $.shuffle(clone).slice(0, 3);
+        
+        return $.shuffle( [correct].concat(incorrect) );
 
-	    if (mixUp.altName) {
-	    	mixUp.altName.className = "alt";
-		}
+    }
+    
+    function shuffleEmUp(then) {
+        
+        var cards = $.shuffle( $("figure.unanswered") ),
+            done = [],
+            prev;
 
-	    var target  = mixUp.target = sample($$("figure")),
-			altName = mixUp.altName = $(".alt", target);
+        $("figure").removeClass("selected highlight");
+        
+        $.each(cards, function(card, i) {
 
-	    target.className += " selected";
+            setTimeout(function(next, previous) {
+                
+                $(next).addClass("highlight");
+                $(previous).removeClass("highlight");
+                
+                done.push(previous);
+                
+                if (done.length === cards.length) {
+                    $("figure").removeClass("highlight");
+                    mixUp();
+                }
 
-	    if (body.offsetWidth / target.offsetLeft <= 2) {
-		    target.className += " right";
-		}
+            }, (Math.random() * 2500), card, cards[i-1]);
 
-	    setTimeout(function() {
-		      altName.className = "alt hover";
-	    }, time * 0.5);
+        });
 
-	}
+    }
 
-	setInterval(mixUp, time);
-	mixUp();
+    function addAnswers(card) {
+        
+        var possible = generateMultipleChoice(card, flashcards),
+            $card = $(card),
+            answer = $card.attr("data-name"),
+            $answers = $card.find(".multiple-choice");
+
+        $answers.empty();
+
+        $card.removeClass("correct incorrect");
+
+        var newAnswers = $.template( $("#tmpl-multiple-choice").html(), {
+            answers: possible.map(function(el) { 
+                return el.getAttribute("data-name");
+            })
+        });
+        
+        $answers.html(newAnswers);
+        
+        $card.find("button").off("click").one("click", function() {
+            
+            var guess = $answers.find("[type='radio']:checked").val();
+
+            if ( guess === answer ) {
+                correct += 1;
+                $card.addClass("correct").removeClass("unanswered");
+                $(".js-correct").text(correct);
+            }  else {
+                incorrect += 1;
+                $card.addClass("incorrect");
+                $(".js-incorrect").text(incorrect);
+            }
+            
+            showName($card);
+            stopwatch.start(shuffleEmUp);
+
+        });
+    }
+
+    function showName ($target) {
+        $target.addClass("reveal");
+    }
+
+    function prepare ($target) {
+
+        $target.removeClass("right reveal correct incorrect").addClass("selected");
+
+        if (body.offsetWidth / $target.offset().left <= 2) {
+		        $target.addClass("right");
+		    }
+
+    }
+    
+	  function mixUp (override) {
+        
+        stopwatch.stop();
+
+        $(".selected").removeClass("selected");
+        $(".alt").removeClass("hover");
+        
+        flashcards = $("figure.unanswered");
+        
+        var plucked  = override || sample(flashcards),
+	          $target  = $(plucked);
+
+        addAnswers(plucked);
+        prepare($target);
+	  }
+
+    function filter (criteria, value) {
+        
+        console.log("Filtering %s by: %s", criteria, value);
+        
+        $("figure").removeClass("unanswered");
+        
+        $("figure").each(function() {
+
+            if ( $(this).attr(criteria) === value) {
+                $(this).addClass("unanswered");
+            }
+
+        });
+        
+        mixUp();
+        
+    }
+
+    flashcards.each(function(card) {
+        $(card).find("img").click(function() {
+            mixUp(card);
+        });
+    });
+
+    $(".global-filter a").click(function(e) {
+
+        e.preventDefault();
+
+        $(".global-filter a").removeClass("active");
+        $(this).addClass("active");
+        
+        filter( "data-team", $(this).attr("data-filter") );
+
+    });
+	  
+    shuffleEmUp(mixUp);
 
 }());

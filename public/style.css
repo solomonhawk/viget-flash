@@ -1,18 +1,37 @@
 @import url("https://raw.github.com/necolas/normalize.css/master/normalize.css");
-@import url(http://fonts.googleapis.com/css?family=Shadows+Into+Light+Two);
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700|Shadows+Into+Light+Two);
 
 body {
 	background: #082b3b;
-	font-family: sans-serif;
+	font-family: 'Source Sans Pro', sans-serif;
 	margin: 10% auto 0;
 	max-width: 1550px;
+}
+
+nav {
+  background: #000;
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  padding: 10px 1%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  text-shadow: 0 1px 0 #000;
+  width: 98%;
 }
 
 h2 {
 	font-family: "Shadows Into Light Two";
 }
 
-h2.alt {
+.name small {
+  opacity: 0;
+  -webkit-transition: 0.3s opacity linear;
+  -moz-transition: 0.3s opacity linear;
+  transition: 0.3s opacity linear;
+}
+
+.name.alt h2 {
 	font-size: 1.25em;
 	position: absolute;
 	top: 0.5em;
@@ -21,10 +40,16 @@ h2.alt {
 	background: white;
 
 	-webkit-transition: 0.3s opacity linear;
+  -moz-transition: 0.3s opacity linear;
+  transition: 0.3s opacity linear;
 }
 
-h2.alt:hover, h2.alt.hover {
+.reveal .name.alt {
 	opacity: 0;
+}
+
+.reveal small {
+  opacity: 1;
 }
 
 small {
@@ -34,23 +59,34 @@ small {
 }
 
 figure {
-	opacity: 0.5;
+	opacity: 0.2;
+  overflow: hidden;
 	padding: 0;
 	position: relative;
 	margin: 0;
 	width: 130px;
 	height: 130px;
 
-	-webkit-transition: 0.3s opacity linear;
+	-webkit-transition: 0.3s all linear;
+  -moz-transition: 0.3s all linear;
+  transition: 0.3s all linear;
+}
+
+figure.unanswered {
+  opacity: 0.5;
 }
 
 figure img {
 	max-width: 100%;
 }
 
-figure.selected {
+figure.selected, figure:hover, figure.highlight {
 	box-shadow: inset 0 0 0 2px #000, 0 1px 3px rgba(0,0,0,0.25);
 	opacity: 1;
+}
+
+figure.selected {
+  overflow: visible;
 }
 
 ul {
@@ -72,17 +108,27 @@ li {
 	color: #082B3B;
 	font-size: 0.87em;
 	font-weight: normal;
-	margin: -80px 0 0;
+	margin: -100px 0 0;
 	opacity: 0;
 	padding-bottom: 1.5em;
 	position: absolute;
 	top: 50%;
-	right: -190px;
-	width: 200px;
+	right: -380px;
+	width: 300px;
 	z-index: 2;
 
 	-webkit-transition: 0.3s all linear;
+  -moz-transition: 0.3s all linear;
+	transition: 0.3s all linear;
 
+}
+
+figure.correct .tooltip {
+  border-color: #4a4;
+}
+
+figure.incorrect .tooltip {
+  border-color: #c33;
 }
 
 .tooltip:after {
@@ -97,7 +143,7 @@ li {
 
 .right .tooltip {
 	right: auto;
-	left: -210px;
+	left: -330px;
 }
 
 .right .tooltip:after {
@@ -108,17 +154,63 @@ li {
 
 .selected .tooltip {
 	opacity: 1;
-	right: -210px;
+	right: -330px;
 }
 
 .tooltip sup {
 	position: absolute;
 	top: -20px;
 	left: 0;
-	color: 
-	white;
+	color: white;
 	font: bold 0.875em/1em sans-serif;
 	text-transform: uppercase;
 	width: 100%;
 	text-align: center;
+}
+
+.pull-right {
+  float: right;
+}
+
+.multiple-choice {
+  display: block;
+  margin: 0 auto;
+  overflow: hidden;
+  width: 80%;
+}
+
+.multiple-choice li {
+  font-size: 12px;
+  float: left;
+  padding: 0.25em 0;
+  text-align: left;
+  width: 50%;
+}
+
+.multiple-choice input[type='radio'] {
+  margin-right: 5px;
+}
+
+hr {
+  border: 0;
+  border-bottom: 1px solid #d9d9d9;
+}
+
+
+.global-filter {
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.25);
+  margin: 0;
+}
+
+.global-filter li a {
+  color: #fff;
+  display: inline-block;
+  font-size: 16px;
+  margin: 0 10px 1em;
+  text-decoration: none;
+}
+
+.global-filter li a.active {
+  text-shadow: 0 0 40px #fff, 0 0 5px #eef;
 }

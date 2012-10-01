@@ -4,14 +4,33 @@
 
 		<li>
 
-			<figure>
+			<figure class="unanswered" data-name="<%= c.name %>" data-team="<%= c.team.toLowerCase() %>">
+
 				<img src="<%= c.photo %>" alt="<%= c.name%>" />
+
 				<figcaption class="tooltip">
+
 					<sup>Hello, my name is:</sup>
-					<h2><%= c.name %></h2>
-					<h2 class="alt"><%= c.name.replace(/\S/g, "*") %></h2>
-					<small><b>I like:</b> <%= c.likes.join(", ") %></small>
+          
+          <div class="name">
+					  <h2>
+              <%= c.name %>
+              <br/>
+              <small><%= c.team %></small>
+            </h2>
+            
+            <div class="name alt">
+					    <h2><%= c.name.replace(/\S/g, "*") %></h2>
+            </div>
+
+            <ul class="multiple-choice"></ul>
+
+            <hr/>
+
+            <button>Submit</button>
+
 				</figcaption>
+        
 			</figure>
 			
 		</li>
@@ -19,3 +38,15 @@
 	<% }) %>
 
 </ul>
+
+<script type="template/underscore" id="tmpl-multiple-choice">
+  
+  <@ $.each(answers, function(answer) { @>
+    <li>
+      <label>
+        <input name="answer" type="radio" value="<@= answer @>" /> <@= answer @>
+      </label>
+    </li>
+    <@ }); @>
+      
+</script>

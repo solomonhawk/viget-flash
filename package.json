@@ -10,12 +10,16 @@
     "ejs" : "0.7.1",
     "express" : "2.5.9"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "mocha" : "*",
+    "chai"   : "*"
+  },
   "optionalDependencies": {},
   "engines": {
     "node": "0.6.x"
   },
   "scripts": {
-    "start": "node app"
+    "start": "node src/main",
+    "test": "make test"
   }
 }
