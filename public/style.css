@@ -101,7 +101,7 @@ li {
 
 .tooltip {
 	background: #fff;
-	border: 2px solid #082B3B;
+	border: 2px solid rgb(18, 53, 69);
 	border-width: 30px 5px 10px;
 	border-radius: 8px;
 	box-shadow: 0 0 2px rgba(0,0,0,0.55);
