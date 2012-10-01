@@ -175,6 +175,8 @@
 
     function filter (criteria, value) {
         
+        globalStop();
+        
         console.log("Filtering %s by: %s", criteria, value);
         
         $("figure").removeClass("unanswered");
@@ -187,7 +189,7 @@
 
         });
         
-        mixUp();
+        shuffleEmUp();
         
     }
 
