@@ -59,6 +59,7 @@ small {
 }
 
 figure {
+  border-color: rgb(18, 53, 69);
 	opacity: 0.2;
   overflow: hidden;
 	padding: 0;
@@ -133,7 +134,8 @@ figure.incorrect .tooltip {
 
 .tooltip:after {
 	border: 10px solid #000;
-	border-color: transparent #082B3B transparent transparent;
+	border-color: transparent;
+  border-left-color: inherit;
 	content: "";
 	margin-top: -20px;
 	position: absolute;
@@ -147,7 +149,8 @@ figure.incorrect .tooltip {
 }
 
 .right .tooltip:after {
-	border-color: transparent transparent transparent #082B3B;
+	border-color: transparent;
+  border-right-color: inherit;
 	left: auto;
 	right: -25px;
 }

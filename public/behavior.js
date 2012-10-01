@@ -56,7 +56,11 @@
     }
     
     function shuffleEmUp(then) {
-        
+
+        if ( $("figure.unanswered").length === 0) {
+            reset();
+        }
+
         var cards = $.shuffle( $("figure.unanswered") ),
             done = [],
             prev;
@@ -83,6 +87,11 @@
 
     }
 
+    function reset() {
+        $("figure").addClass("unanswered");
+        $(".global-filter a").removeClass("active").first().addClass("active");
+    }
+    
     function addAnswers(card) {
         
         var possible = generateMultipleChoice(card, flashcards),
