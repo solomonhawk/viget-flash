@@ -45,4 +45,4 @@ dealer.on("error", function(e) {
 
 setInterval(function() {
     dealer.collect("http://viget.com/about");
-}, 86400000);
+}, 7200000);
